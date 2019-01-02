@@ -1,0 +1,8 @@
+{
+  "name": "water-data-app",
+  "alias": ["water-data-app.now.sh"],
+  "version": 2,
+  "builds": [
+    { "src": "nuxt.config.js", "use": "@bluebeel/nuxt"  }
+  ]
+}
