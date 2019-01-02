@@ -9,8 +9,9 @@
 </template>
 
 <script>
+import list from '~/queries/list'
 import Logo from '~/components/Logo.vue'
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 
 export default {
   components: {
@@ -21,16 +22,22 @@ export default {
       list: []
     }
   },
+  // apollo: {
+  //   list: {
+  //     query: gql`
+  //       query list {
+  //         list {
+  //           name
+  //           id
+  //         }
+  //       }`
+  //   },
+  //   prefetch: true
+  // }
   apollo: {
     list: {
-      query: gql`
-        query list {
-          list {
-            name
-            id
-          }
-        }
-      `
+      prefetch: true,
+      query: list
     }
   }
 }
