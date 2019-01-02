@@ -11,7 +11,7 @@
 <script>
 import list from '~/queries/list'
 import Logo from '~/components/Logo.vue'
-// import gql from 'graphql-tag'
+import gql from 'graphql-tag'
 
 export default {
   components: {
@@ -34,10 +34,33 @@ export default {
   //   },
   //   prefetch: true
   // }
+  // apollo: {
+  //   list: {
+  //     prefetch: true,
+  //     query: list,
+  //     variables() {
+  //       // Use vue reactive properties here
+  //       return {
+  //         state: 'tx'
+  //       }
+  //     }
+  //   }
+  // },
   apollo: {
     list: {
       prefetch: true,
-      query: list
+      query: gql`
+        query list($state: String!) {
+          list(state: $state) {
+            name
+          }
+        }
+      `,
+      variables() {
+        return {
+          state: 'la'
+        }
+      }
     }
   }
 }
