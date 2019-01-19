@@ -1,99 +1,49 @@
 <template>
-  <section class="container">
-    <div>
-      <div v-for="(site) in list" :key="site.id">
-        <h3>{{ site.name }}</h3>
+  <section>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">USA Rivers and Lakes</h1>
+          <h2 class="subtitle">Choose a state</h2>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div v-for="(site) in list" :key="site.slug" class="section">
+        <nuxt-link :to="{path: `/${site.slug}` }">
+          <h3 class="title">{{ site.name }}</h3>
+        </nuxt-link>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import list from '~/queries/list'
-import Logo from '~/components/Logo.vue'
-import gql from 'graphql-tag'
+// import list from '~/queries/list'
+// import Logo from '~/components/Logo.vue'
+// import gql from 'graphql-tag'
 
 export default {
-  components: {
-    Logo
-  },
   data() {
     return {
-      list: []
-    }
-  },
-  // apollo: {
-  //   list: {
-  //     query: gql`
-  //       query list {
-  //         list {
-  //           name
-  //           id
-  //         }
-  //       }`
-  //   },
-  //   prefetch: true
-  // }
-  // apollo: {
-  //   list: {
-  //     prefetch: true,
-  //     query: list,
-  //     variables() {
-  //       // Use vue reactive properties here
-  //       return {
-  //         state: 'tx'
-  //       }
-  //     }
-  //   }
-  // },
-  apollo: {
-    list: {
-      prefetch: true,
-      query: gql`
-        query list($state: String!) {
-          list(state: $state) {
-            name
-          }
+      list: [
+        {
+          name: 'Texas',
+          slug: 'tx'
+        },
+        {
+          name: 'Louisiana',
+          slug: 'la'
+        },
+        {
+          name: 'Colorado',
+          slug: 'co'
         }
-      `,
-      variables() {
-        return {
-          state: 'la'
-        }
-      }
+      ]
     }
   }
 }
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
