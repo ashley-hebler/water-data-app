@@ -1,6 +1,6 @@
 <template>
   <section>
-    <section class="hero is-primary">
+    <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">USA Rivers and Lakes</h1>
@@ -8,13 +8,18 @@
         </div>
       </div>
     </section>
-    <div class="container">
-      <div v-for="(site) in list" :key="site.slug" class="section">
-        <nuxt-link :to="{path: `/${site.slug}` }">
-          <h3 class="title">{{ site.name }}</h3>
-        </nuxt-link>
+    <section class="section">
+      <div class="container">
+        <aside class="menu">
+          <p class="menu-label">States</p>
+          <ul v-for="(site) in list" :key="site.slug" class="menu-list">
+            <li>
+              <nuxt-link :to="{path: `/${site.slug}` }">{{ site.name }}</nuxt-link>
+            </li>
+          </ul>
+        </aside>
       </div>
-    </div>
+    </section>
   </section>
 </template>
 

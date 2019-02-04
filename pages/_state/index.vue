@@ -1,9 +1,25 @@
 <template>
   <section class="container">
-    <div class="panel">
-      <div class="panel-heading">
-        <h1>{{ $route.params.state }} Rivers and Lakes</h1>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <nav class="breadcrumb is-medium" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <nuxt-link :to="{path: `/` }">All</nuxt-link>
+          </li>
+          <li class="is-active"><a href="#" aria-current="page">{{ state | stateName }}</a></li>
+        </ul>
+      </nav>
+    </nav>
+    <section class="hero is-info is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">{{ $route.params.state | stateName }}</h1>
+          <h2 class="subtitle">Rivers and Lakes</h2>
+        </div>
       </div>
+    </section>
+    <div class="panel">
+
       <div v-for="(site, index) in list" :key="site.id + index" class="panel-block">
         <nuxt-link :to="{path: `/${$route.params.state}/${site.id}` }">{{ site.name }}</nuxt-link>
       </div>
