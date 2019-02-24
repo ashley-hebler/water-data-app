@@ -19,7 +19,7 @@
         <div class="hero-body">
           <div class="container">
             <h1 class="title">{{ info.name }}</h1>
-            <h2 class="subtitle">Primary subtitle</h2>
+            <h2 class="subtitle">{{ info.city }}, {{ state | stateName }}</h2>
           </div>
         </div>
       </section>
@@ -110,6 +110,7 @@ export default {
             name
             lat
             long
+            city
           }
         }
       `,

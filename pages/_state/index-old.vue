@@ -6,43 +6,36 @@
           <li>
             <nuxt-link :to="{path: `/` }">All</nuxt-link>
           </li>
-          <li class="is-active">
-            <a href="#" aria-current="page">{{ state | stateName }}</a>
-          </li>
+          <li class="is-active"><a href="#" aria-current="page">{{ state | stateName }}</a></li>
         </ul>
       </nav>
     </nav>
     <section class="hero is-info is-bold">
       <div class="hero-body">
-        <h1 class="title">{{ $route.params.state | stateName }}</h1>
-        <h2 class="subtitle">Rivers and Lakes</h2>
-        <div class="field">
-          <div class="control">
-            <input v-model="search" class="input" type="text" placeholder="Search">
-          </div>
+        <div class="container">
+          <h1 class="title">{{ $route.params.state | stateName }}</h1>
+          <h2 class="subtitle">Rivers and Lakes</h2>
         </div>
       </div>
     </section>
     <div class="panel">
-      <div v-for="(site, index) in filteredList" :key="site.id + index" class="panel-block">
+
+      <div v-for="(site, index) in list" :key="site.id + index" class="panel-block">
         <nuxt-link :to="{path: `/${$route.params.state}/${site.id}` }">{{ site.name }}</nuxt-link>
       </div>
-      <!-- <div v-for="(site, index) in list" :key="site.id + index" class="panel-block">
-        <nuxt-link :to="{path: `/${$route.params.state}/${site.id}` }">{{ site.name }}</nuxt-link>
-      </div>-->
     </div>
     <div class="panel-block">
       <button
         v-if="$apollo.queries.list.loading"
         class="button is-link is-outlined is-fullwidth"
       >Loading...</button>
-      <!-- <button
+      <button
         v-else-if="showMoreEnabled"
         class="button is-link is-outlined is-fullwidth"
         @click="showMore"
       >More
         <Observer @intersect="showMore"/>
-      </button>-->
+      </button>
     </div>
   </section>
 </template>
@@ -69,8 +62,7 @@ export default {
       end: SITES_PER_PAGE,
       skipQuery: true,
       loading: false,
-      showMoreEnabled: true,
-      search: ''
+      showMoreEnabled: true
     }
   },
 
@@ -85,11 +77,10 @@ export default {
         }
       },
       query: gql`
-        query list($state: String!) {
-          list(state: $state) {
+        query list($state: String!, $start: Int!, $end: Int!) {
+          list(state: $state, start: $start, end: $end) {
             name
             id
-            city
           }
         }
       `,
@@ -100,19 +91,6 @@ export default {
           end: SITES_PER_PAGE
         }
       }
-    }
-  },
-  computed: {
-    filteredList() {
-      return this.list.filter(listItem => {
-        let query = this.search.toLowerCase()
-        if (listItem.name.toLowerCase().includes(query)) {
-          return true
-        }
-        if (listItem.city.toLowerCase().includes(query)) {
-          return true
-        }
-      })
     }
   },
   mounted() {},
@@ -129,7 +107,9 @@ export default {
         resolve(data)
       })
     },
-
+    blah() {
+      console.log('hi!')
+    },
     showMore() {
       let start = this.list.length + 1
       let end = start + SITES_PER_PAGE
